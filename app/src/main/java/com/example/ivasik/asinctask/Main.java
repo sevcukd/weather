@@ -10,17 +10,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 
 public class Main extends AppCompatActivity {
     private String parsingData = "";
@@ -60,54 +56,7 @@ public class Main extends AppCompatActivity {
 
     }
 
-
-
-    public String parsingCity(String parsingData) throws ParseException {
-        JSONObject weatherJsonObject = (JSONObject) JSONValue.parseWithException(parsingData);
-        return (String) weatherJsonObject.get("name");
-    }
-
-    public String parsingPogoda(String parsingData) throws ParseException {
-        JSONObject weatherJsonObject = (JSONObject) JSONValue.parseWithException(parsingData);
-        JSONArray weatherArray = (JSONArray) weatherJsonObject.get("weather");
-        JSONObject weatherData = (JSONObject) weatherArray.get(0);
-        return (String) weatherData.get("main");
-    }
-
-    public Long parsingTemp(String parsingData) throws ParseException {
-        JSONObject weatherJsonObject = (JSONObject) JSONValue.parseWithException(parsingData);
-        JSONObject temp = (JSONObject) weatherJsonObject.get("main");
-        JSONArray arrayTemp = new JSONArray();
-        arrayTemp.add(temp);
-        JSONObject tempData = (JSONObject) arrayTemp.get(0);
-        return (Long) tempData.get("temp");
-    }
-
-    public Long parsingHumidity(String parsingData) throws ParseException {
-        JSONObject weatherJsonObject = (JSONObject) JSONValue.parseWithException(parsingData);
-        JSONObject humidity = (JSONObject) weatherJsonObject.get("main");
-        JSONArray arrayHumidity = new JSONArray();
-        arrayHumidity.add(humidity);
-        JSONObject HumidityData = (JSONObject) arrayHumidity.get(0);
-        return (Long) HumidityData.get("humidity");
-    }
-
-    public Long parsingWind(String parsingData) throws ParseException {
-        JSONObject weatherJsonObject = (JSONObject) JSONValue.parseWithException(parsingData);
-        JSONObject wind = (JSONObject) weatherJsonObject.get("wind");
-        JSONArray arrayWind = new JSONArray();
-        arrayWind.add(wind);
-        JSONObject windData = (JSONObject) arrayWind.get(0);
-        return (Long) windData.get("speed");
-    }
-
     private class Background extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Toast.makeText(Main.this, "Іщу, іщу нахой", Toast.LENGTH_LONG).show();
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -141,9 +90,11 @@ public class Main extends AppCompatActivity {
             } catch (Throwable cause) {
                 cause.printStackTrace();
             } finally {
+
                 if (connection != null)
                     connection.disconnect();
             }
+
             return null;
         }
 
@@ -156,7 +107,7 @@ public class Main extends AppCompatActivity {
             String[] arr = str1.split("\\.");
             tvTempMain.setText(arr[0] + "°С");
 
-            tvCity.setText(parsing.parseString("name", parsingData));
+            tvCity.setText(parsing.parseString( parsingData));
             tvWeathere.setText(parsing.parseString("weather", "main", parsingData));
             String str = parsing.parseString("weather", "main", parsingData);
             tvTemp.setText(arr[0] + "°С");

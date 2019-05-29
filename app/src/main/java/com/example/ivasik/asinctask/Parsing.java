@@ -5,7 +5,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.ParseException;
 
-import java.sql.Struct;
 
 public class Parsing {
 
@@ -24,7 +23,7 @@ public class Parsing {
     }
 
 
-    public String parseString(String wth, String parsingData) {
+    public String parseString( String parsingData) {
         JSONObject weatherJsonObject = null;
         try {
             weatherJsonObject = (JSONObject) JSONValue.parseWithException(parsingData);
